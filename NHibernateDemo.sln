@@ -5,13 +5,13 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EB8C1671-E5CB-46DE-9C53-BFB168AF978A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NHbibernateDemo.API", "src\NHbibernateDemo.API\NHbibernateDemo.API.csproj", "{BA200A78-0C8E-4BB1-B440-C43CAB06F9A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NHibernateDemo.API", "src\NHibernateDemo.API\NHibernateDemo.API.csproj", "{BA200A78-0C8E-4BB1-B440-C43CAB06F9A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NHbibernateDemo.Application", "src\NHbibernateDemo.Application\NHbibernateDemo.Application.csproj", "{7367E612-9819-4DB2-9766-EB168F6F7A28}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NHibernateDemo.Application", "src\NHibernateDemo.Application\NHibernateDemo.Application.csproj", "{7367E612-9819-4DB2-9766-EB168F6F7A28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NHbibernateDemo.Core", "src\NHbibernateDemo.Core\NHbibernateDemo.Core.csproj", "{ED3F41DE-DA41-4D09-BF88-65AA9058FBF3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NHibernateDemo.Core", "src\NHibernateDemo.Core\NHibernateDemo.Core.csproj", "{ED3F41DE-DA41-4D09-BF88-65AA9058FBF3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NHbibernateDemo.Infrastructure", "src\NHbibernateDemo.Infrastructure\NHbibernateDemo.Infrastructure.csproj", "{CA6F8A37-6281-4DDC-9AFE-0E8DDF7FC849}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NHibernateDemo.Infrastructure", "src\NHibernateDemo.Infrastructure\NHibernateDemo.Infrastructure.csproj", "{CA6F8A37-6281-4DDC-9AFE-0E8DDF7FC849}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
