@@ -19,6 +19,11 @@ public class StudentMap : ClassMap<Student>
             .Length(100)
             .Not.Nullable();
 
+        Map(x => x.Email).Not.Nullable()
+            .Column("email")
+            .Length(100)
+            .Not.Nullable();
+
         Map(x => x.Course).Not.Nullable()
             .Column("course")
             .Length(100)
