@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using NHbibernateDemo.Core.Domains.Entities;
 using NHbibernateDemo.Infrastructure.Interfaces.Repositories;
 using NHibernate;
@@ -8,14 +9,18 @@ namespace NHbibernateDemo.Infrastructure.Repositories;
 public class StudentRepository : IStudentRepository
 {
     private readonly ISessionFactory _sessionFactory;
+    private readonly ILogger<StudentRepository> _logger;
 
-    public StudentRepository(ISessionFactory sessionFactory)
+    public StudentRepository(ISessionFactory sessionFactory, ILogger<StudentRepository> logger)
     {
         _sessionFactory = sessionFactory;
+        _logger = logger;
     }
 
     public async Task<bool> AddStudentAsync(Student student)
     {
+        _logger.LogInformation("Adding a new student: {Student}", student);
+
         using ISession session = _sessionFactory.OpenSession();
         using ITransaction transaction = session.BeginTransaction();
 
@@ -24,44 +29,61 @@ public class StudentRepository : IStudentRepository
             await session.SaveAsync(student);
             await transaction.CommitAsync();
 
+            _logger.LogInformation("Student added successfully with ID: {StudentId}", student.Id);
             return true;
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Failed to add student: {Student}", student);
             return false;
         }
     }
 
     public async Task<Student?> GetStudentAsync(int id)
     {
+        _logger.LogInformation("Fetching student with ID: {StudentId}", id);
+
         using ISession session = _sessionFactory.OpenSession();
 
         try
         {
-            return await session.GetAsync<Student>(id);
+            Student? student = await session.GetAsync<Student>(id);
+            
+            if (student is not null)
+                _logger.LogInformation("Student retrieved: {Student}", student);
+
+            return student;
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Error retrieving student with ID: {StudentId}", id);
             return null;
         }
     }
 
     public async Task<IEnumerable<Student>> GetStudentsListAsync()
     {
+        _logger.LogInformation("Fetching list of all students...");
+
         using ISession session = _sessionFactory.OpenSession();
 
         try
         {
-            return await session.Query<Student>().ToListAsync();
+            var students = await session.Query<Student>().ToListAsync();
+            _logger.LogInformation("Retrieved {Count} students.", students.Count);
+            return students;
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Error retrieving student list.");
             return [];
         }
     }
 
     public async Task<bool> RemoveStudentAsync(int id)
     {
+        _logger.LogInformation("Removing student with ID: {StudentId}", id);
+
         using ISession session = _sessionFactory.OpenSession();
         using ITransaction transaction = session.BeginTransaction();
 
@@ -74,10 +96,12 @@ public class StudentRepository : IStudentRepository
             await session.DeleteAsync(student);
             await transaction.CommitAsync();
 
+            _logger.LogInformation("Student with ID {StudentId} removed successfully.", id);
             return true;
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Error removing student with ID: {StudentId}", id);
             await transaction.RollbackAsync();
             return false;
         }
@@ -85,12 +109,14 @@ public class StudentRepository : IStudentRepository
 
     public async Task<bool> UpdateStudentAsync(int id, Student updatedStudent)
     {
+        _logger.LogInformation("Updating student with ID: {StudentId}", id);
+
         using ISession session = _sessionFactory.OpenSession();
         using ITransaction transaction = session.BeginTransaction();
+
         try
         {
             Student student = await session.GetAsync<Student>(id);
-
             if (student is null)
                 return false;
 
@@ -101,10 +127,12 @@ public class StudentRepository : IStudentRepository
             await session.UpdateAsync(student);
             await transaction.CommitAsync();
 
+            _logger.LogInformation("Student with ID {StudentId} updated successfully.", id);
             return true;
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Error updating student with ID: {StudentId}", id);
             await transaction.RollbackAsync();
             return false;
         }
