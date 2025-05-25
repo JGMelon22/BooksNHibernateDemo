@@ -7,6 +7,8 @@ public class StudentMap : ClassMap<Student>
 {
     public StudentMap()
     {
+        Table("Students");
+
         Id(x => x.Id)
             .Column("id")
             .Index("idx_student_id")
