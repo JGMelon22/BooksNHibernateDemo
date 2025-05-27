@@ -1,6 +1,5 @@
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
-using NHibernateDemo.Core.Domains.Entities;
 using NHibernateDemo.Infrastructure.Mapping;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;

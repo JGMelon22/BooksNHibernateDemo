@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NHibernateDemo.Core\NHibernateDemo.Core.csproj" />
+    <ProjectReference Include="..\NHibernateDemo.Infrastructure\NHibernateDemo.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
