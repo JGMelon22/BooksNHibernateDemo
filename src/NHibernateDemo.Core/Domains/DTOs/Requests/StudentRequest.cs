@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace NHbibernateDemo.Core.Domains.DTOs.Requests;
+namespace NHibernateDemo.Core.Domains.DTOs.Requests;
 
 public record StudentRequest
 (

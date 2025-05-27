@@ -1,11 +1,11 @@
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
-using NHbibernateDemo.Core.Domains.Entities;
-using NHbibernateDemo.Infrastructure.Mapping;
+using NHibernateDemo.Core.Domains.Entities;
+using NHibernateDemo.Infrastructure.Mapping;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
 
-namespace NHbibernateDemo.Infrastructure.Configuration;
+namespace NHibernateDemo.Infrastructure.Configuration;
 
 public class NHibernateConfiguration
 {

@@ -1,8 +1,8 @@
-using NHbibernateDemo.Core.Domains.DTOs.Requests;
-using NHbibernateDemo.Core.Domains.DTOs.Responses;
-using NHbibernateDemo.Core.Domains.Entities;
+using NHibernateDemo.Core.Domains.DTOs.Requests;
+using NHibernateDemo.Core.Domains.DTOs.Responses;
+using NHibernateDemo.Core.Domains.Entities;
 
-namespace NHbibernateDemo.Core.Domains.Mappings;
+namespace NHibernateDemo.Core.Domains.Mappings;
 
 public static class MappingExtensions
 {

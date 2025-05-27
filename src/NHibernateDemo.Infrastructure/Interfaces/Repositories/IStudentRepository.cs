@@ -1,7 +1,7 @@
-using NHbibernateDemo.Core.Domains.Entities;
-using NHbibernateDemo.Core.Shared;
+using NHibernateDemo.Core.Domains.Entities;
+using NHibernateDemo.Core.Shared;
 
-namespace NHbibernateDemo.Infrastructure.Interfaces.Repositories;
+namespace NHibernateDemo.Infrastructure.Interfaces.Repositories;
 
 public interface IStudentRepository
 {

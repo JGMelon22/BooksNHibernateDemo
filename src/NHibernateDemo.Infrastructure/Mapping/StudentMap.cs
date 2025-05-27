@@ -1,7 +1,7 @@
 using FluentNHibernate.Mapping;
-using NHbibernateDemo.Core.Domains.Entities;
+using NHibernateDemo.Core.Domains.Entities;
 
-namespace NHbibernateDemo.Infrastructure.Mapping;
+namespace NHibernateDemo.Infrastructure.Mapping;
 
 public class StudentMap : ClassMap<Student>
 {

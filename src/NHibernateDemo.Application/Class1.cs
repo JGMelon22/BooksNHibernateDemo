@@ -1,4 +1,4 @@
-﻿namespace NHbibernateDemo.Application;
+﻿namespace NHibernateDemo.Application;
 
 public class Class1
 {

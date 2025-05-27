@@ -1,4 +1,4 @@
-namespace NHbibernateDemo.Core.Domains.DTOs.Responses;
+namespace NHibernateDemo.Core.Domains.DTOs.Responses;
 
 public record StudentResponse
 {

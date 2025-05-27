@@ -1,4 +1,4 @@
-namespace NHbibernateDemo.Core.Domains.Entities;
+namespace NHibernateDemo.Core.Domains.Entities;
 
 public class Student
 {

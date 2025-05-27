@@ -1,6 +1,6 @@
-@NHbibernateDemo.API_HostAddress = http://localhost:5127
+@NHibernateDemo.API_HostAddress = http://localhost:5127
 
-GET {{NHbibernateDemo.API_HostAddress}}/weatherforecast/
+GET {{NHibernateDemo.API_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###

@@ -1,9 +1,9 @@
-using NHbibernateDemo.Infrastructure.Configuration;
-using NHbibernateDemo.Infrastructure.Interfaces.Repositories;
-using NHbibernateDemo.Infrastructure.Repositories;
+using NHibernateDemo.Infrastructure.Configuration;
+using NHibernateDemo.Infrastructure.Interfaces.Repositories;
+using NHibernateDemo.Infrastructure.Repositories;
 using NHibernate;
 
-namespace NHbibernateDemo.API.Extensions
+namespace NHibernateDemo.API.Extensions
 {
     public static class IocExtensions
     {

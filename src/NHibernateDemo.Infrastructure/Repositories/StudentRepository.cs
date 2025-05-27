@@ -1,10 +1,10 @@
 using Microsoft.Extensions.Logging;
-using NHbibernateDemo.Core.Domains.Entities;
-using NHbibernateDemo.Infrastructure.Interfaces.Repositories;
+using NHibernateDemo.Core.Domains.Entities;
+using NHibernateDemo.Infrastructure.Interfaces.Repositories;
 using NHibernate;
 using NHibernate.Linq;
 
-namespace NHbibernateDemo.Infrastructure.Repositories;
+namespace NHibernateDemo.Infrastructure.Repositories;
 
 public class StudentRepository : IStudentRepository
 {

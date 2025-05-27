@@ -1,4 +1,4 @@
-namespace NHbibernateDemo.Core.Shared;
+namespace NHibernateDemo.Core.Shared;
 
 public class Result<T>
 {

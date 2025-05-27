@@ -1,4 +1,4 @@
-using NHbibernateDemo.API.Extensions;
+using NHibernateDemo.API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
