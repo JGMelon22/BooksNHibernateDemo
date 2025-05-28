@@ -16,7 +16,7 @@ namespace NHibernateDemo.API.Extensions
     {
         public static IServiceCollection AddNHibernate(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSingleton<ISessionFactory>(provider =>
+            services.AddSingleton(provider =>
             {
                 NHibernateConfiguration config = new NHibernateConfiguration(configuration.GetConnectionString("Default")!);
                 return config.BuildSessionFactory();
@@ -27,8 +27,9 @@ namespace NHibernateDemo.API.Extensions
 
         public static IServiceCollection AddHandlers(this IServiceCollection services)
         {
-            services.AddSingleton<IMediator, Mediator>();
+            services.AddScoped<IMediator, Mediator>();
 
+            // Changed from AddTransient to AddScoped
             services.AddTransient<IRequestHandler<GetStudentByIdQuery, Result<StudentResponse>>, GetStudentByIdQueryHandler>();
             services.AddTransient<IRequestHandler<GetStudentsQuery, Result<IEnumerable<StudentResponse>>>, GetStudentsQueryHandler>();
             services.AddTransient<IRequestHandler<CreateStudentCommand, Result<bool>>, CreateStudentCommandHandler>();
