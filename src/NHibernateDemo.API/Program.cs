@@ -8,6 +8,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddNHibernate(builder.Configuration);
+builder.Services.AddHandlers();
 builder.Services.AddRepositories();
 
 var app = builder.Build();

@@ -2,6 +2,11 @@ using NHibernateDemo.Infrastructure.Configuration;
 using NHibernateDemo.Infrastructure.Interfaces.Repositories;
 using NHibernateDemo.Infrastructure.Repositories;
 using NHibernate;
+using NetDevPack.SimpleMediator;
+using NHibernateDemo.Application.Queries;
+using NHibernateDemo.Core.Shared;
+using NHibernateDemo.Core.Domains.DTOs.Responses;
+using NHibernateDemo.Application.Queries.Handlers;
 
 namespace NHibernateDemo.API.Extensions
 {
@@ -14,6 +19,16 @@ namespace NHibernateDemo.API.Extensions
                 NHibernateConfiguration config = new NHibernateConfiguration(configuration.GetConnectionString("Default")!);
                 return config.BuildSessionFactory();
             });
+
+            return services;
+        }
+
+        public static IServiceCollection AddHandlers(this IServiceCollection services)
+        {
+            services.AddSingleton<IMediator, Mediator>();
+
+            services.AddTransient<IRequestHandler<GetStudentByIdQuery, Result<StudentResponse>>, GetStudentByIdQueryHandler>();
+            services.AddTransient<IRequestHandler<GetStudentsQuery, Result<IEnumerable<StudentResponse>>>, GetStudentsQueryHandler>();
 
             return services;
         }
