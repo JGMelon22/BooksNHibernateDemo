@@ -7,6 +7,8 @@ using NHibernateDemo.Application.Queries;
 using NHibernateDemo.Core.Shared;
 using NHibernateDemo.Core.Domains.DTOs.Responses;
 using NHibernateDemo.Application.Queries.Handlers;
+using NHibernateDemo.Application.Commands;
+using NHibernateDemo.Application.Commands.Handlers;
 
 namespace NHibernateDemo.API.Extensions
 {
@@ -29,6 +31,9 @@ namespace NHibernateDemo.API.Extensions
 
             services.AddTransient<IRequestHandler<GetStudentByIdQuery, Result<StudentResponse>>, GetStudentByIdQueryHandler>();
             services.AddTransient<IRequestHandler<GetStudentsQuery, Result<IEnumerable<StudentResponse>>>, GetStudentsQueryHandler>();
+            services.AddTransient<IRequestHandler<CreateStudentCommand, Result<bool>>, CreateStudentCommandHandler>();
+            services.AddTransient<IRequestHandler<UpdateStudentCommand, Result<bool>>, UpdateStudentCommandHandler>();
+            services.AddTransient<IRequestHandler<RemoveStudentCommand, Result<bool>>, RemoveStudentCommandHandler>();
 
             return services;
         }
