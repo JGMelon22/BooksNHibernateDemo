@@ -9,6 +9,19 @@ A side project made to study about NHibernate ORM with DDD and Simple SimpleMedi
     <img height="32" src="https://img.shields.io/badge/Microsoft%20SQL%20Server-CC2927?style=for-the-badge&logo=microsoft%20sql%20server&logoColor=white" alt="Microsoft SQL Server" title="Microsoft SQL Server" />
 </div>
 
+### 📸 Project Preview
+
+<div style="display: flex; gap: 20px; flex-wrap: wrap;">
+  <div>
+    <strong>Swagger UI</strong><br/>
+    <img src="https://github.com/user-attachments/assets/4161b747-9097-4c7e-b7d8-a54ca3bfa43c" alt="Swagger UI" width="650"/>
+  </div>
+  <div>
+    <strong>VS Code Project Structure</strong><br/>
+    <img src="https://github.com/user-attachments/assets/3fd85e0b-4202-4356-baf4-9703165a5879" alt="VS Code Screenshot" width="650"/>
+  </div>
+</div>
+
 ### 🧩 Dependencies
 #### **API Layer** (`NHibernateDemo.API`)
 - [`Microsoft.AspNetCore.OpenApi`](https://www.nuget.org/packages/Microsoft.AspNetCore.OpenApi) — OpenAPI support for ASP.NET Core.  
