@@ -69,8 +69,8 @@ public class StudentRepository : IStudentRepository
 
         try
         {
-            var students = await session.Query<Student>().ToListAsync();
-            _logger.LogInformation("Retrieved {Count} students.", students.Count);
+            IEnumerable<Student> students = await session.Query<Student>().ToListAsync();
+            _logger.LogInformation("Retrieved {Count} students.", students.Count());
             return students;
         }
         catch (Exception ex)
