@@ -1,7 +1,6 @@
 using NHibernateDemo.Infrastructure.Configuration;
 using NHibernateDemo.Infrastructure.Interfaces.Repositories;
 using NHibernateDemo.Infrastructure.Repositories;
-using NHibernate;
 using NetDevPack.SimpleMediator;
 using NHibernateDemo.Application.Queries;
 using NHibernateDemo.Core.Shared;
@@ -29,7 +28,6 @@ namespace NHibernateDemo.API.Extensions
         {
             services.AddScoped<IMediator, Mediator>();
 
-            // Changed from AddTransient to AddScoped
             services.AddTransient<IRequestHandler<GetStudentByIdQuery, Result<StudentResponse>>, GetStudentByIdQueryHandler>();
             services.AddTransient<IRequestHandler<GetStudentsQuery, Result<IEnumerable<StudentResponse>>>, GetStudentsQueryHandler>();
             services.AddTransient<IRequestHandler<CreateStudentCommand, Result<bool>>, CreateStudentCommandHandler>();
