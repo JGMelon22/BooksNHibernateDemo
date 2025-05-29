@@ -1,5 +1,7 @@
 using NetDevPack.SimpleMediator;
+using NHibernateDemo.Application.Commands;
 using NHibernateDemo.Application.Queries;
+using NHibernateDemo.Core.Domains.DTOs.Requests;
 using NHibernateDemo.Core.Domains.DTOs.Responses;
 using NHibernateDemo.Core.Shared;
 
@@ -12,6 +14,22 @@ public static class StudentEndpoint
         app.MapGet("/students", GetStudentsListAsync)
             .WithName("GetStudentsList")
             .WithOpenApi();
+
+        app.MapGet("/student/{id}", GetStudentAsync)
+            .WithName("GetStudent")
+            .WithOpenApi();
+
+        app.MapPost("/student", AddStudentAsync)
+            .WithName("AddStudent")
+            .WithOpenApi();
+
+        app.MapPatch("/student/{id}", UpdateStudentAsync)
+            .WithName("UpdateStudent")
+            .WithOpenApi();
+
+        app.MapDelete("/student/{id}", RemoveStudentAsync)
+            .WithName("RemoveStudent")
+            .WithOpenApi();
     }
 
     private static async Task<IResult> GetStudentsListAsync(IMediator mediator)
@@ -21,5 +39,41 @@ public static class StudentEndpoint
         return students.Data != null || students.Data!.Any()
             ? Results.Ok(students)
             : Results.BadRequest(students);
+    }
+
+    private static async Task<IResult> GetStudentAsync(IMediator mediator, int id)
+    {
+        Result<StudentResponse> student = await mediator.Send(new GetStudentByIdQuery(id));
+
+        return student.Data != null
+            ? Results.Ok(student)
+            : Results.NotFound(student);
+    }
+
+    private static async Task<IResult> AddStudentAsync(IMediator mediator, StudentRequest student)
+    {
+        Result<bool> success = await mediator.Send(new CreateStudentCommand(student));
+
+        return success.IsSuccess != false
+            ? Results.Ok(success)
+            : Results.BadRequest(success);
+    }
+
+    private static async Task<IResult> UpdateStudentAsync(IMediator mediator, int id, StudentRequest student)
+    {
+        Result<bool> success = await mediator.Send(new UpdateStudentCommand(id, student));
+
+        return success.IsSuccess != false
+            ? Results.Ok(success)
+            : Results.BadRequest(success);
+    }
+
+    private static async Task<IResult> RemoveStudentAsync(IMediator mediator, int id)
+    {
+        Result<bool> success = await mediator.Send(new RemoveStudentCommand(id));
+
+        return success.IsSuccess != false
+            ? Results.Ok(success)
+            : Results.BadRequest(success);
     }
 }
