@@ -1,5 +1,6 @@
 using NHibernateDemo.API.Endpoints;
 using NHibernateDemo.API.Extensions;
+using NHibernateDemo.Infrastructure.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddNHibernate(builder.Configuration);
 builder.Services.AddHandlers();
 builder.Services.AddRepositories();
+
+builder.Services.Configure<BasicAuthOptions>(builder.Configuration.GetSection(BasicAuthOptions.BasicAuth));
 
 var app = builder.Build();
 
