@@ -41,3 +41,9 @@ A side project made to study about NHibernate ORM with DDD and Simple SimpleMedi
 - [`Microsoft.Data.SqlClient`](https://www.nuget.org/packages/Microsoft.Data.SqlClient) — SQL Server data provider.  
 - [`Microsoft.Extensions.Logging.Abstractions`](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Abstractions) — Logging abstractions for dependency injection and flexibility.  
 - [`NHibernate`](https://www.nuget.org/packages/NHibernate) — ORM for interacting with relational databases.
+
+### 📚 References
+[NHibernate - The object-relational mapper for .NET](https://nhibernate.info/) \
+[NHibernate - Relational Persistence for Idiomatic .NET](https://nhibernate.info/doc/nhibernate-reference/index.html) \
+[ASP .NET MVC -  CRUD com Fluent NHibernate - I](https://www.macoratti.net/16/01/mvc_crudnhb1.htm) \
+[ASP .NET Core -  Usando o NHibernate e FluentNHibernate](https://www.macoratti.net/19/07/aspnc_nhib1.htm)
