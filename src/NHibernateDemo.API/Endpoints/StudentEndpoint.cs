@@ -1,3 +1,4 @@
+using MiniValidation;
 using NetDevPack.SimpleMediator;
 using NHibernateDemo.Application.Commands;
 using NHibernateDemo.Application.Queries;
@@ -52,6 +53,9 @@ public static class StudentEndpoint
 
     private static async Task<IResult> AddStudentAsync(IMediator mediator, StudentRequest student)
     {
+        if (!MiniValidator.TryValidate(student, out IDictionary<string, string[]> errors))
+            return Results.ValidationProblem(errors);
+
         Result<bool> success = await mediator.Send(new CreateStudentCommand(student));
 
         return success.IsSuccess != false
@@ -61,6 +65,9 @@ public static class StudentEndpoint
 
     private static async Task<IResult> UpdateStudentAsync(IMediator mediator, int id, StudentRequest student)
     {
+        if (!MiniValidator.TryValidate(student, out IDictionary<string, string[]> errors))
+            return Results.ValidationProblem(errors);
+
         Result<bool> success = await mediator.Send(new UpdateStudentCommand(id, student));
 
         return success.IsSuccess != false
