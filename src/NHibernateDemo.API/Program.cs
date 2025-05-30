@@ -1,5 +1,6 @@
 using NHibernateDemo.API.Endpoints;
 using NHibernateDemo.API.Extensions;
+using NHibernateDemo.API.Middleware;
 using NHibernateDemo.Infrastructure.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +24,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<BasicAuthMiddleware>();
 
 app.UseHttpsRedirection();
 
