@@ -13,6 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddNHibernate(builder.Configuration);
 builder.Services.AddHandlers();
 builder.Services.AddRepositories();
+builder.Services.AddSwagger();
 
 builder.Services.Configure<BasicAuthOptions>(builder.Configuration.GetSection(BasicAuthOptions.BasicAuth));
 
