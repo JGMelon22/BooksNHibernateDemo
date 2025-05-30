@@ -26,10 +26,34 @@ public class StudentRepository : IStudentRepository
 
         try
         {
-            await session.SaveAsync(student);
+            const string sql = """
+                INSERT INTO Students
+                (
+                    Name, Email,
+                    Course, Gender
+                )
+                VALUES
+                (
+                    :name, :email,
+                    :course, :gender
+                );
+                """;
+
+            int result = await session.CreateSQLQuery(sql)
+                                            .SetParameter("name", student.Name)
+                                            .SetParameter("email", student.Email)
+                                            .SetParameter("course", student.Course)
+                                            .SetParameter("gender", student.Gender)
+                                            .ExecuteUpdateAsync();
+
             await transaction.CommitAsync();
 
-            _logger.LogInformation("Student added successfully with ID: {StudentId}", student.Id);
+            if (result == 0)
+            {
+                _logger.LogWarning("No student was added.");
+                return false;
+            }
+
             return true;
         }
         catch (Exception ex)
@@ -47,8 +71,17 @@ public class StudentRepository : IStudentRepository
 
         try
         {
-            Student? student = await session.GetAsync<Student>(id);
-            
+            const string sql = """
+                SELECT * 
+                FROM Students
+                WHERE Id = :id; 
+                """;
+
+            Student student = await session.CreateSQLQuery(sql)
+                                           .AddEntity(typeof(Student))
+                                           .SetParameter("id", id)
+                                           .UniqueResultAsync<Student>();
+
             if (student is not null)
                 _logger.LogInformation("Student retrieved: {Student}", student);
 
@@ -69,7 +102,15 @@ public class StudentRepository : IStudentRepository
 
         try
         {
-            IEnumerable<Student> students = await session.Query<Student>().ToListAsync();
+            const string sql = """
+                SELECT * 
+                FROM Students;
+                """;
+
+            IEnumerable<Student> students = await session.CreateSQLQuery(sql)
+                                           .AddEntity(typeof(Student))
+                                           .ListAsync<Student>();
+
             _logger.LogInformation("Retrieved {Count} students.", students.Count());
             return students;
         }
@@ -89,12 +130,24 @@ public class StudentRepository : IStudentRepository
 
         try
         {
-            Student student = await session.GetAsync<Student>(id);
-            if (student is null)
-                return false;
+            const string sql = """
+                DELETE 
+                FROM Students
+                WHERE Id = :id; 
+                """;
 
-            await session.DeleteAsync(student);
+            int result = await session.CreateSQLQuery(sql) 
+                                      .AddEntity(typeof(Student))
+                                      .SetParameter("id", id)
+                                      .ExecuteUpdateAsync();
+
             await transaction.CommitAsync();
+
+            if(result == 0)
+            {
+                 _logger.LogWarning("No student was removed.");
+                return false;
+            }
 
             _logger.LogInformation("Student with ID {StudentId} removed successfully.", id);
             return true;
@@ -116,16 +169,31 @@ public class StudentRepository : IStudentRepository
 
         try
         {
-            Student student = await session.GetAsync<Student>(id);
-            if (student is null)
-                return false;
+            const string sql = """
+                UPDATE Students
+                SET Name = :name,
+                    Email = :email,
+                    Course = :course,
+                    Gender = :gender
+                WHERE Id = :id; 
+                """;
 
-            student.Name = updatedStudent.Name;
-            student.Course = updatedStudent.Course;
-            student.Gender = updatedStudent.Gender;
+            int result = await session.CreateSQLQuery(sql)
+                                      .AddEntity(typeof(Student))
+                                      .SetParameter("name", updatedStudent.Name)
+                                      .SetParameter("email", updatedStudent.Email)
+                                      .SetParameter("course", updatedStudent.Course)
+                                      .SetParameter("gender", updatedStudent.Gender)
+                                      .SetParameter("id", id)
+                                      .ExecuteUpdateAsync();
 
-            await session.UpdateAsync(student);
             await transaction.CommitAsync();
+
+            if (result == 0)
+            {
+                _logger.LogWarning("No student was removed.");
+                return false;
+            }
 
             _logger.LogInformation("Student with ID {StudentId} updated successfully.", id);
             return true;
