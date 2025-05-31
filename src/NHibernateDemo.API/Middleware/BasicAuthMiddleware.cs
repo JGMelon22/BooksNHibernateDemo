@@ -27,12 +27,12 @@ public class BasicAuthMiddleware
 
         if (string.IsNullOrEmpty(authorizationHeader) || !authorizationHeader.StartsWith("Basic", StringComparison.OrdinalIgnoreCase))
         {
-            _logger.LogWarning("No credentials found in the query string.");
+            _logger.LogWarning("No credentials found in the header.");
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
             await context.Response.WriteAsync("Unauthorized.");
             return;
         }
-        
+
         string base64Credentials = authorizationHeader.Substring("Basic".Length).Trim();
 
         try
@@ -72,12 +72,13 @@ public class BasicAuthMiddleware
             _logger.LogError("Invalid argument in authentication processing: {Message}", ex.Message);
             context.Response.StatusCode = StatusCodes.Status400BadRequest;
             await context.Response.WriteAsync("Bad request");
+            return;
         }
-        catch (InvalidOperationException ex)
+        catch (FormatException ex)
         {
-            _logger.LogError("Invalid operation in authentication processing: {Message}", ex.Message);
-            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-            await context.Response.WriteAsync("Internal server error");
+            _logger.LogWarning("Invalid Base64 format in authorization header: {Message}", ex.Message);
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+            await context.Response.WriteAsync("Bad request - Invalid Base64 format");
             return;
         }
         catch (Exception ex)
