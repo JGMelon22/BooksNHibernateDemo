@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTets", "UnitTets", "{77
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NHibernateDemo.API.UnitTests", "tests\UnitTets\NHibernateDemo.API.UnitTests\NHibernateDemo.API.UnitTests.csproj", "{CFD0D107-83BA-4D4E-AE8C-AF246A8B50C6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NHibernateDemo.Application.UnitTests", "tests\UnitTets\NHibernateDemo.Application.UnitTests\NHibernateDemo.Application.UnitTests.csproj", "{6396FC2F-D6A3-4C95-A8FC-16A83C33BCE7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,10 @@ Global
 		{CFD0D107-83BA-4D4E-AE8C-AF246A8B50C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CFD0D107-83BA-4D4E-AE8C-AF246A8B50C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CFD0D107-83BA-4D4E-AE8C-AF246A8B50C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6396FC2F-D6A3-4C95-A8FC-16A83C33BCE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6396FC2F-D6A3-4C95-A8FC-16A83C33BCE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6396FC2F-D6A3-4C95-A8FC-16A83C33BCE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6396FC2F-D6A3-4C95-A8FC-16A83C33BCE7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BA200A78-0C8E-4BB1-B440-C43CAB06F9A6} = {EB8C1671-E5CB-46DE-9C53-BFB168AF978A}
@@ -56,5 +62,6 @@ Global
 		{CA6F8A37-6281-4DDC-9AFE-0E8DDF7FC849} = {EB8C1671-E5CB-46DE-9C53-BFB168AF978A}
 		{77106313-C7CD-40BE-A1C4-82106AD4AF2A} = {14993C34-5B01-44F9-9E69-77571B5BA817}
 		{CFD0D107-83BA-4D4E-AE8C-AF246A8B50C6} = {77106313-C7CD-40BE-A1C4-82106AD4AF2A}
+		{6396FC2F-D6A3-4C95-A8FC-16A83C33BCE7} = {77106313-C7CD-40BE-A1C4-82106AD4AF2A}
 	EndGlobalSection
 EndGlobal
