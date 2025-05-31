@@ -85,7 +85,7 @@ public class BasicAuthMiddlewareTests
         Mock<IOptions<BasicAuthOptions>> options = new();
         bool nextCalled = false;
 
-        BasicAuthOptions basicAuth = new() { Username = "test-username", Password = "testpassowrd" };
+        BasicAuthOptions basicAuth = new() { Username = "test-username", Password = "testpassword" };
         options.Setup(x => x.Value).Returns(basicAuth);
         RequestDelegate next = (HttpContext context) =>
         {
