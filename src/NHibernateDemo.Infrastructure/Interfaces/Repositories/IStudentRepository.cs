@@ -1,5 +1,4 @@
 using NHibernateDemo.Core.Domains.Entities;
-using NHibernateDemo.Core.Shared;
 
 namespace NHibernateDemo.Infrastructure.Interfaces.Repositories;
 
