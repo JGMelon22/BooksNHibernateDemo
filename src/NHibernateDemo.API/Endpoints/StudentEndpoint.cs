@@ -37,7 +37,7 @@ public static class StudentEndpoint
     {
         Result<IEnumerable<StudentResponse>> students = await mediator.Send(new GetStudentsQuery());
 
-        return students.Data != null || students.Data!.Any()
+        return students.Data != null && students.Data!.Any()
             ? Results.Ok(students)
             : Results.NoContent();
     }
