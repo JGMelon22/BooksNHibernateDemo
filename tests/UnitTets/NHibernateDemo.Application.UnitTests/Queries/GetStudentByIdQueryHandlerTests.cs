@@ -26,7 +26,7 @@ public class GetStudentByIdQueryHandlerTests
         };
 
         GetStudentByIdQuery query = new(1);
-        Result<Student> repositoryResult = new(student, true, string.Empty);
+        Result<Student> repositoryResult = Result<Student>.Success(student);
 
         repository
             .Setup(x => x.GetStudentAsync(1))

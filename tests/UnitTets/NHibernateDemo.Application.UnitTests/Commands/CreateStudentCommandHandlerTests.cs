@@ -21,7 +21,7 @@ public class CreateStudentCommandHandlerTests
         Student student = studentRequest.ToDomain();
 
         CreateStudentCommand command = new(studentRequest);
-        Result<bool> repositoryResult = new(true, true, string.Empty);
+        Result<bool> result = Result<bool>.Success(true);
 
         repository
             .Setup(x => x.AddStudentAsync(It.IsAny<Student>()))
