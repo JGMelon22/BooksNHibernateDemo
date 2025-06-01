@@ -12,7 +12,7 @@ namespace NHibernateDemo.API.UnitTests.Middleware;
 public class BasicAuthMiddlewareTests
 {
     [Fact]
-    public async Task Should_ReturnUnauthoried_When_NoCredentialProvided()
+    public async Task Should_ReturnUnauthorized_When_NoCredentialProvided()
     {
         // Arrange
         Mock<ILogger<BasicAuthMiddleware>> logger = new();

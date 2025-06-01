@@ -16,7 +16,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NHibernateDemo.Application\NHibernateDemo.Application.csproj" />
-    <ProjectReference Include="..\NHibernateDemo.Infrastructure\NHibernateDemo.Infrastructure.csproj" />
+    <ProjectReference
+      Include="..\NHibernateDemo.Infrastructure\NHibernateDemo.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="NHibernateDemo.API.UnitTests" />
   </ItemGroup>
 
 </Project>

@@ -33,16 +33,16 @@ public static class StudentEndpoint
             .WithOpenApi();
     }
 
-    private static async Task<IResult> GetStudentsListAsync(IMediator mediator)
+    internal static async Task<IResult> GetStudentsListAsync(IMediator mediator)
     {
         Result<IEnumerable<StudentResponse>> students = await mediator.Send(new GetStudentsQuery());
 
-        return students.Data != null || students.Data!.Any()
+        return students.Data != null && students.Data!.Any()
             ? Results.Ok(students)
-            : Results.BadRequest(students);
+            : Results.NoContent();
     }
 
-    private static async Task<IResult> GetStudentAsync(IMediator mediator, int id)
+    internal static async Task<IResult> GetStudentAsync(IMediator mediator, int id)
     {
         Result<StudentResponse> student = await mediator.Send(new GetStudentByIdQuery(id));
 
@@ -51,7 +51,7 @@ public static class StudentEndpoint
             : Results.NotFound(student);
     }
 
-    private static async Task<IResult> AddStudentAsync(IMediator mediator, StudentRequest student)
+    internal static async Task<IResult> AddStudentAsync(IMediator mediator, StudentRequest student)
     {
         if (!MiniValidator.TryValidate(student, out IDictionary<string, string[]> errors))
             return Results.ValidationProblem(errors);
@@ -63,7 +63,7 @@ public static class StudentEndpoint
             : Results.BadRequest(success);
     }
 
-    private static async Task<IResult> UpdateStudentAsync(IMediator mediator, int id, StudentRequest student)
+    internal static async Task<IResult> UpdateStudentAsync(IMediator mediator, int id, StudentRequest student)
     {
         if (!MiniValidator.TryValidate(student, out IDictionary<string, string[]> errors))
             return Results.ValidationProblem(errors);
@@ -75,7 +75,7 @@ public static class StudentEndpoint
             : Results.BadRequest(success);
     }
 
-    private static async Task<IResult> RemoveStudentAsync(IMediator mediator, int id)
+    internal static async Task<IResult> RemoveStudentAsync(IMediator mediator, int id)
     {
         Result<bool> success = await mediator.Send(new RemoveStudentCommand(id));
 
