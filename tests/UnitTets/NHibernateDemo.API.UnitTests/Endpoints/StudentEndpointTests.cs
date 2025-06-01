@@ -142,7 +142,7 @@ public class StudentEndpointTests
     {
         // Arrange
         Mock<IMediator> mediator = new();
-        StudentRequest student = new("Invalid Name", "invalid.email@example.com", "Computer Science", "Female");
+        StudentRequest student = new("0", "invalid.email@example.com", "Computer Science", "Female");
 
         Result<bool> result = new(false, false, string.Empty);
 
@@ -156,6 +156,6 @@ public class StudentEndpointTests
         // Assert
         result.Data.ShouldBeFalse();
         result.IsSuccess.ShouldBeFalse();
-        response.ShouldBeOfType<BadRequest<Result<bool>>>();
+        response.ShouldBeOfType<ProblemHttpResult>();
     }
 }
