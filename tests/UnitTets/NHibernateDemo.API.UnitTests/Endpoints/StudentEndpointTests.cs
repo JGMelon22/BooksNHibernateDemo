@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NetDevPack.SimpleMediator;
 using NHibernateDemo.API.Endpoints;
@@ -8,7 +7,6 @@ using NHibernateDemo.Application.Commands;
 using NHibernateDemo.Application.Queries;
 using NHibernateDemo.Core.Domains.DTOs.Requests;
 using NHibernateDemo.Core.Domains.DTOs.Responses;
-using NHibernateDemo.Core.Domains.Entities;
 using NHibernateDemo.Core.Shared;
 using Shouldly;
 
@@ -30,7 +28,7 @@ public class StudentEndpointTests
            new() { Id = 5, Name = "Ella Martinez", Email = "ella.martinez@example.com", Course = "Psychology", Gender = "Female" }
         ];
 
-        Result<IEnumerable<StudentResponse>> result = new(students, true, string.Empty);
+        Result<IEnumerable<StudentResponse>> result = Result<IEnumerable<StudentResponse>>.Success(students);
 
         mediator
             .Setup(x => x.Send(It.IsAny<GetStudentsQuery>(), default))
@@ -42,6 +40,10 @@ public class StudentEndpointTests
         // Assert
         result.Data.ShouldNotBeNull();
         response.ShouldBeOfType<Ok<Result<IEnumerable<StudentResponse>>>>();
+
+        mediator.Verify(x => x.Send(
+            It.IsAny<GetStudentsQuery>(),
+            default), Times.Once);
     }
 
     [Fact]
@@ -51,7 +53,7 @@ public class StudentEndpointTests
         Mock<IMediator> mediator = new();
         IEnumerable<StudentResponse> students = [];
 
-        Result<IEnumerable<StudentResponse>> result = new(students, true, string.Empty);
+        Result<IEnumerable<StudentResponse>> result = Result<IEnumerable<StudentResponse>>.Success(students);
 
         mediator
             .Setup(x => x.Send(It.IsAny<GetStudentsQuery>(), default))
@@ -64,10 +66,14 @@ public class StudentEndpointTests
         result.Data.ShouldNotBeNull();
         result.Data.ShouldBeEmpty();
         response.ShouldBeOfType<NoContent>();
+
+        mediator.Verify(x => x.Send(
+            It.IsAny<GetStudentsQuery>(),
+            default), Times.Once);
     }
 
     [Fact]
-    public async Task Should_Return204Ok_When_StudentsIsFound()
+    public async Task Should_Return200Ok_When_StudentIdIsFound()
     {
         // Arrange
         Mock<IMediator> mediator = new();
@@ -80,10 +86,10 @@ public class StudentEndpointTests
             Gender = "Female"
         };
 
-        Result<StudentResponse> result = new(student, true, string.Empty);
+        Result<StudentResponse> result = Result<StudentResponse>.Success(student);
 
         mediator
-            .Setup(x => x.Send(It.IsAny<GetStudentByIdQuery>(), default))
+            .Setup(x => x.Send(It.Is<GetStudentByIdQuery>(q => q.Id == 1), default))
             .ReturnsAsync(result);
 
         // Act
@@ -92,19 +98,22 @@ public class StudentEndpointTests
         // Assert
         result.Data.ShouldNotBeNull();
         response.ShouldBeOfType<Ok<Result<StudentResponse>>>();
+
+        mediator.Verify(x => x.Send(
+            It.Is<GetStudentByIdQuery>(q => q.Id == 1),
+            default), Times.Once);
     }
 
     [Fact]
-    public async Task Should_Return404NotFound_When_StudentsIsFound()
+    public async Task Should_Return404NotFound_When_StudentsIsNotFound()
     {
         // Arrange
         Mock<IMediator> mediator = new();
-        StudentResponse student = null!;
 
-        Result<StudentResponse> result = new(student, true, string.Empty);
+        Result<StudentResponse> result = Result<StudentResponse>.Failure("Student with Id 2 not found!");
 
         mediator
-            .Setup(x => x.Send(It.IsAny<GetStudentByIdQuery>(), default))
+            .Setup(x => x.Send(It.Is<GetStudentByIdQuery>(q => q.Id == 2), default))
             .ReturnsAsync(result);
 
         // Act
@@ -113,16 +122,20 @@ public class StudentEndpointTests
         // Assert
         result.Data.ShouldBeNull();
         response.ShouldBeOfType<NotFound<Result<StudentResponse>>>();
+
+        mediator.Verify(x => x.Send(
+            It.Is<GetStudentByIdQuery>(q => q.Id == 2),
+            default), Times.Once);
     }
 
     [Fact]
-    public async Task Should_Return200Ok_When_PassedStudentIsValid()
+    public async Task Should_Return200Ok_When_PassedStudentToBeCreatedIsValid()
     {
         // Arrange
         Mock<IMediator> mediator = new();
         StudentRequest student = new("Alice Johnson", "alice.johnson@example.com", "Computer Science", "Female");
 
-        Result<bool> result = new(true, true, string.Empty);
+        Result<bool> result = Result<bool>.Success(true);
 
         mediator
             .Setup(x => x.Send(It.IsAny<CreateStudentCommand>(), default))
@@ -135,16 +148,20 @@ public class StudentEndpointTests
         result.Data.ShouldBeTrue();
         result.IsSuccess.ShouldBeTrue();
         response.ShouldBeOfType<Ok<Result<bool>>>();
+
+        mediator.Verify(x => x.Send(
+            It.IsAny<CreateStudentCommand>(),
+            default), Times.Once);
     }
 
     [Fact]
-    public async Task Should_Return400BadRequest_When_PassedStudentIsNotValid()
+    public async Task Should_Return400BadRequest_When_PassedStudentToBeCreatedIsNotValid()
     {
         // Arrange
         Mock<IMediator> mediator = new();
         StudentRequest student = new("0", "invalid.email@example.com", "Computer Science", "Female");
 
-        Result<bool> result = new(false, false, string.Empty);
+        Result<bool> result = Result<bool>.Failure(string.Empty);
 
         mediator
             .Setup(x => x.Send(It.IsAny<CreateStudentCommand>(), default))
@@ -157,5 +174,135 @@ public class StudentEndpointTests
         result.Data.ShouldBeFalse();
         result.IsSuccess.ShouldBeFalse();
         response.ShouldBeOfType<ProblemHttpResult>();
+
+        mediator.Verify(x => x.Send(
+            It.IsAny<CreateStudentCommand>(),
+            default), Times.Never);
+    }
+
+    [Fact]
+    public async Task Should_Return_200Ok_When_StudentIdIsFoundAndSuccessfullyUpdated()
+    {
+        // Arrange
+        Mock<IMediator> mediator = new();
+
+        StudentRequest studentRequest = new("Alice Johnson", "alice.johnson@example.com", "Computer Science", "Female");
+        Result<bool> result = Result<bool>.Success(true);
+
+        mediator
+            .Setup(x => x.Send(It.Is<UpdateStudentCommand>(c => c.Id == 12), default))
+            .ReturnsAsync(result);
+
+        // Act
+        IResult response = await StudentEndpoint.UpdateStudentAsync(mediator.Object, 12, studentRequest);
+
+        // Assert
+        result.Data.ShouldBeTrue();
+        result.IsSuccess.ShouldBeTrue();
+        response.ShouldBeOfType<Ok<Result<bool>>>();
+
+        mediator.Verify(x => x.Send(
+            It.Is<UpdateStudentCommand>(cmd => cmd.Id == 12),
+            default), Times.Once);
+    }
+
+    [Fact]
+    public async Task Should_Return_404NotFound_When_StudentIdToBeUpdatedIsNotFound()
+    {
+        // Arrange
+        Mock<IMediator> mediator = new();
+
+        StudentRequest studentRequest = new("Alice Johnson", "alice.johnson@example.com", "Computer Science", "Female");
+        Result<bool> result = Result<bool>.Failure("Student with Id 12 not found!");
+
+        mediator
+            .Setup(x => x.Send(It.Is<UpdateStudentCommand>(c => c.Id == 12), default))
+            .ReturnsAsync(result);
+
+        // Act
+        IResult response = await StudentEndpoint.UpdateStudentAsync(mediator.Object, 12, studentRequest);
+
+        // Assert
+        result.Data.ShouldBeFalse();
+        result.IsSuccess.ShouldBeFalse();
+        response.ShouldBeOfType<BadRequest<Result<bool>>>();
+
+        mediator.Verify(x => x.Send(
+            It.Is<UpdateStudentCommand>(cmd => cmd.Id == 12),
+            default), Times.Once);
+    }
+
+    [Fact]
+    public async Task Should_Return400BadRequest_When_PassedStudentToBeUpdatedIsNotValid()
+    {
+        // Arrange
+        Mock<IMediator> mediator = new();
+
+        StudentRequest studentRequest = new("0", "x", "y", "z");
+        Result<bool> result = Result<bool>.Failure(string.Empty);
+
+        mediator
+            .Setup(x => x.Send(It.Is<UpdateStudentCommand>(c => c.Id == 12), default))
+            .ReturnsAsync(result);
+
+        // Act
+        IResult response = await StudentEndpoint.UpdateStudentAsync(mediator.Object, 12, studentRequest);
+
+        // Assert
+        result.Data.ShouldBeFalse();
+        result.IsSuccess.ShouldBeFalse();
+        response.ShouldBeOfType<ProblemHttpResult>();
+
+        mediator.Verify(x => x.Send(
+            It.Is<UpdateStudentCommand>(cmd => cmd.Id == 12),
+            default), Times.Never);
+    }
+
+    [Fact]
+    public async Task Should_Return200Ok_When_StudentIsSuccessfullyDeleted()
+    {
+        // Arrange
+        Mock<IMediator> mediator = new();
+        Result<bool> result = Result<bool>.Success(true);
+
+        mediator
+            .Setup(x => x.Send(It.Is<RemoveStudentCommand>(c => c.Id == 12), default))
+            .ReturnsAsync(result);
+
+        // Act
+        IResult response = await StudentEndpoint.RemoveStudentAsync(mediator.Object, 12);
+
+        // Assert
+        result.Data.ShouldBeTrue();
+        result.IsSuccess.ShouldBeTrue();
+        response.ShouldBeOfType<Ok<Result<bool>>>();
+
+        mediator.Verify(x => x.Send(
+            It.Is<RemoveStudentCommand>(cmd => cmd.Id == 12),
+            default), Times.Once);
+    }
+
+    [Fact]
+    public async Task Should_Return400BadRequest_When_StudentToBeDeletedIsNotFound()
+    {
+        // Arrange
+        Mock<IMediator> mediator = new();
+        Result<bool> result = Result<bool>.Failure(string.Empty);
+
+        mediator
+            .Setup(x => x.Send(It.Is<RemoveStudentCommand>(c => c.Id == 12), default))
+            .ReturnsAsync(result);
+
+        // Act
+        IResult response = await StudentEndpoint.RemoveStudentAsync(mediator.Object, 12);
+
+        // Assert
+        result.Data.ShouldBeFalse();
+        result.IsSuccess.ShouldBeFalse();
+        response.ShouldBeOfType<BadRequest<Result<bool>>>();
+
+        mediator.Verify(x => x.Send(
+            It.Is<RemoveStudentCommand>(cmd => cmd.Id == 12),
+            default), Times.Once);
     }
 }
