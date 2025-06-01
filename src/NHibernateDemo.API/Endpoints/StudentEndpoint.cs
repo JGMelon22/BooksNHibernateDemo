@@ -39,7 +39,7 @@ public static class StudentEndpoint
 
         return students.Data != null || students.Data!.Any()
             ? Results.Ok(students)
-            : Results.BadRequest(students);
+            : Results.NoContent();
     }
 
     private static async Task<IResult> GetStudentAsync(IMediator mediator, int id)

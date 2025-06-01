@@ -1,4 +1,4 @@
-CREATE IF NOT EXISTS NHibernateStudents;
+CREATE DATABASE NHibernateStudents;
 GO
 
 USE NHibernateStudents;
