@@ -12,23 +12,25 @@ public static class StudentEndpoint
 {
     public static void MapStudentsRoute(this IEndpointRouteBuilder app)
     {
-        app.MapGet("/students", GetStudentsListAsync)
+        RouteGroupBuilder group = app.MapGroup("/students");
+
+        group.MapGet("/", GetStudentsListAsync)
             .WithName("GetStudentsList")
             .WithOpenApi();
 
-        app.MapGet("/student/{id}", GetStudentAsync)
+        group.MapGet("/{id}", GetStudentAsync)
             .WithName("GetStudent")
             .WithOpenApi();
 
-        app.MapPost("/student", AddStudentAsync)
+        group.MapPost("/", AddStudentAsync)
             .WithName("AddStudent")
             .WithOpenApi();
 
-        app.MapPatch("/student/{id}", UpdateStudentAsync)
+        group.MapPatch("/{id}", UpdateStudentAsync)
             .WithName("UpdateStudent")
             .WithOpenApi();
 
-        app.MapDelete("/student/{id}", RemoveStudentAsync)
+        group.MapDelete("/{id}", RemoveStudentAsync)
             .WithName("RemoveStudent")
             .WithOpenApi();
     }
