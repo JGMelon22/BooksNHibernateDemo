@@ -1,6 +1,6 @@
-using System.Text;
 using Microsoft.Extensions.Options;
 using NHibernateDemo.Infrastructure.Configuration;
+using System.Text;
 
 namespace NHibernateDemo.API.Middleware;
 

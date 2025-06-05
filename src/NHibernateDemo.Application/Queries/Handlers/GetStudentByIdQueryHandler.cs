@@ -1,7 +1,7 @@
 using NetDevPack.SimpleMediator;
-using NHibernateDemo.Core.Domains.Mappings;
 using NHibernateDemo.Core.Domains.DTOs.Responses;
 using NHibernateDemo.Core.Domains.Entities;
+using NHibernateDemo.Core.Domains.Mappings;
 using NHibernateDemo.Core.Shared;
 using NHibernateDemo.Infrastructure.Interfaces.Repositories;
 

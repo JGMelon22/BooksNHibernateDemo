@@ -4,4 +4,4 @@ using NHibernateDemo.Core.Shared;
 
 namespace NHibernateDemo.Application.Commands;
 
-public record CreateStudentCommand (StudentRequest Student) : IRequest<Result<bool>>;
+public record CreateStudentCommand(StudentRequest Student) : IRequest<Result<bool>>;

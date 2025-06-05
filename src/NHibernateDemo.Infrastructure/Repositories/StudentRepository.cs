@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Logging;
-using NHibernateDemo.Core.Domains.Entities;
-using NHibernateDemo.Infrastructure.Interfaces.Repositories;
 using NHibernate;
 using NHibernate.Linq;
+using NHibernateDemo.Core.Domains.Entities;
+using NHibernateDemo.Infrastructure.Interfaces.Repositories;
 
 namespace NHibernateDemo.Infrastructure.Repositories;
 
@@ -48,7 +48,7 @@ public class StudentRepository : IStudentRepository
         try
         {
             Student? student = await session.GetAsync<Student>(id);
-            
+
             if (student is not null)
                 _logger.LogInformation("Student retrieved: {Student}", student);
 

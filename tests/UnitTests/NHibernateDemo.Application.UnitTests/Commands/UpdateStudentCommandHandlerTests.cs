@@ -1,4 +1,3 @@
-using FluentNHibernate.Conventions.AcceptanceCriteria;
 using Moq;
 using NHibernateDemo.Application.Commands;
 using NHibernateDemo.Application.Commands.Handlers;

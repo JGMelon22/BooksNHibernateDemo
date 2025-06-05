@@ -1,4 +1,3 @@
-using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -6,6 +5,7 @@ using Moq;
 using NHibernateDemo.API.Middleware;
 using NHibernateDemo.Infrastructure.Configuration;
 using Shouldly;
+using System.Text;
 
 namespace NHibernateDemo.API.UnitTests.Middleware;
 

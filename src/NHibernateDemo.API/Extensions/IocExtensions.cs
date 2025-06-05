@@ -1,13 +1,13 @@
+using NetDevPack.SimpleMediator;
+using NHibernateDemo.Application.Commands;
+using NHibernateDemo.Application.Commands.Handlers;
+using NHibernateDemo.Application.Queries;
+using NHibernateDemo.Application.Queries.Handlers;
+using NHibernateDemo.Core.Domains.DTOs.Responses;
+using NHibernateDemo.Core.Shared;
 using NHibernateDemo.Infrastructure.Configuration;
 using NHibernateDemo.Infrastructure.Interfaces.Repositories;
 using NHibernateDemo.Infrastructure.Repositories;
-using NetDevPack.SimpleMediator;
-using NHibernateDemo.Application.Queries;
-using NHibernateDemo.Core.Shared;
-using NHibernateDemo.Core.Domains.DTOs.Responses;
-using NHibernateDemo.Application.Queries.Handlers;
-using NHibernateDemo.Application.Commands;
-using NHibernateDemo.Application.Commands.Handlers;
 
 namespace NHibernateDemo.API.Extensions
 {
