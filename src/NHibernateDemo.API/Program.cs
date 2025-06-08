@@ -15,6 +15,8 @@ builder.Services.AddHandlers();
 builder.Services.AddRepositories();
 builder.Services.AddSwagger();
 
+builder.Services.AddFusionCache();
+
 builder.Services.Configure<BasicAuthOptions>(builder.Configuration.GetSection(BasicAuthOptions.BasicAuth));
 
 var app = builder.Build();
