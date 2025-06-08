@@ -31,7 +31,7 @@ public class StudentEndpointTests
         Result<IEnumerable<StudentResponse>> result = Result<IEnumerable<StudentResponse>>.Success(students);
 
         mediator
-            .Setup(x => x.Send(It.IsAny<GetStudentsQuery>(), default))
+            .Setup(x => x.Send(It.IsAny<GetStudentsQuery>(), CancellationToken.None))
             .ReturnsAsync(result);
 
         // Act
@@ -43,7 +43,7 @@ public class StudentEndpointTests
 
         mediator.Verify(x => x.Send(
             It.IsAny<GetStudentsQuery>(),
-            default), Times.Once);
+            CancellationToken.None), Times.Once);
     }
 
     [Fact]
@@ -56,7 +56,7 @@ public class StudentEndpointTests
         Result<IEnumerable<StudentResponse>> result = Result<IEnumerable<StudentResponse>>.Success(students);
 
         mediator
-            .Setup(x => x.Send(It.IsAny<GetStudentsQuery>(), default))
+            .Setup(x => x.Send(It.IsAny<GetStudentsQuery>(), CancellationToken.None))
             .ReturnsAsync(result);
 
         // Act
@@ -69,7 +69,7 @@ public class StudentEndpointTests
 
         mediator.Verify(x => x.Send(
             It.IsAny<GetStudentsQuery>(),
-            default), Times.Once);
+            CancellationToken.None), Times.Once);
     }
 
     [Fact]
@@ -89,7 +89,7 @@ public class StudentEndpointTests
         Result<StudentResponse> result = Result<StudentResponse>.Success(student);
 
         mediator
-            .Setup(x => x.Send(It.Is<GetStudentByIdQuery>(q => q.Id == 1), default))
+            .Setup(x => x.Send(It.Is<GetStudentByIdQuery>(q => q.Id == 1), CancellationToken.None))
             .ReturnsAsync(result);
 
         // Act
@@ -101,7 +101,7 @@ public class StudentEndpointTests
 
         mediator.Verify(x => x.Send(
             It.Is<GetStudentByIdQuery>(q => q.Id == 1),
-            default), Times.Once);
+            CancellationToken.None), Times.Once);
     }
 
     [Fact]
@@ -113,7 +113,7 @@ public class StudentEndpointTests
         Result<StudentResponse> result = Result<StudentResponse>.Failure("Student with Id 2 not found!");
 
         mediator
-            .Setup(x => x.Send(It.Is<GetStudentByIdQuery>(q => q.Id == 2), default))
+            .Setup(x => x.Send(It.Is<GetStudentByIdQuery>(q => q.Id == 2), CancellationToken.None))
             .ReturnsAsync(result);
 
         // Act
@@ -125,7 +125,7 @@ public class StudentEndpointTests
 
         mediator.Verify(x => x.Send(
             It.Is<GetStudentByIdQuery>(q => q.Id == 2),
-            default), Times.Once);
+            CancellationToken.None), Times.Once);
     }
 
     [Fact]
@@ -138,7 +138,7 @@ public class StudentEndpointTests
         Result<bool> result = Result<bool>.Success(true);
 
         mediator
-            .Setup(x => x.Send(It.IsAny<CreateStudentCommand>(), default))
+            .Setup(x => x.Send(It.IsAny<CreateStudentCommand>(), CancellationToken.None))
             .ReturnsAsync(result);
 
         // Act
@@ -151,7 +151,7 @@ public class StudentEndpointTests
 
         mediator.Verify(x => x.Send(
             It.IsAny<CreateStudentCommand>(),
-            default), Times.Once);
+            CancellationToken.None), Times.Once);
     }
 
     [Fact]
@@ -164,7 +164,7 @@ public class StudentEndpointTests
         Result<bool> result = Result<bool>.Failure(string.Empty);
 
         mediator
-            .Setup(x => x.Send(It.IsAny<CreateStudentCommand>(), default))
+            .Setup(x => x.Send(It.IsAny<CreateStudentCommand>(), CancellationToken.None))
             .ReturnsAsync(result);
 
         // Act
@@ -177,7 +177,7 @@ public class StudentEndpointTests
 
         mediator.Verify(x => x.Send(
             It.IsAny<CreateStudentCommand>(),
-            default), Times.Never);
+            CancellationToken.None), Times.Never);
     }
 
     [Fact]
@@ -190,7 +190,7 @@ public class StudentEndpointTests
         Result<bool> result = Result<bool>.Success(true);
 
         mediator
-            .Setup(x => x.Send(It.Is<UpdateStudentCommand>(c => c.Id == 12), default))
+            .Setup(x => x.Send(It.Is<UpdateStudentCommand>(c => c.Id == 12), CancellationToken.None))
             .ReturnsAsync(result);
 
         // Act
@@ -203,7 +203,7 @@ public class StudentEndpointTests
 
         mediator.Verify(x => x.Send(
             It.Is<UpdateStudentCommand>(cmd => cmd.Id == 12),
-            default), Times.Once);
+            CancellationToken.None), Times.Once);
     }
 
     [Fact]
@@ -216,7 +216,7 @@ public class StudentEndpointTests
         Result<bool> result = Result<bool>.Failure("Student with Id 12 not found!");
 
         mediator
-            .Setup(x => x.Send(It.Is<UpdateStudentCommand>(c => c.Id == 12), default))
+            .Setup(x => x.Send(It.Is<UpdateStudentCommand>(c => c.Id == 12), CancellationToken.None))
             .ReturnsAsync(result);
 
         // Act
@@ -229,7 +229,7 @@ public class StudentEndpointTests
 
         mediator.Verify(x => x.Send(
             It.Is<UpdateStudentCommand>(cmd => cmd.Id == 12),
-            default), Times.Once);
+            CancellationToken.None), Times.Once);
     }
 
     [Fact]
@@ -242,7 +242,7 @@ public class StudentEndpointTests
         Result<bool> result = Result<bool>.Failure(string.Empty);
 
         mediator
-            .Setup(x => x.Send(It.Is<UpdateStudentCommand>(c => c.Id == 12), default))
+            .Setup(x => x.Send(It.Is<UpdateStudentCommand>(c => c.Id == 12), CancellationToken.None))
             .ReturnsAsync(result);
 
         // Act
@@ -255,7 +255,7 @@ public class StudentEndpointTests
 
         mediator.Verify(x => x.Send(
             It.Is<UpdateStudentCommand>(cmd => cmd.Id == 12),
-            default), Times.Never);
+            CancellationToken.None), Times.Never);
     }
 
     [Fact]
@@ -266,7 +266,7 @@ public class StudentEndpointTests
         Result<bool> result = Result<bool>.Success(true);
 
         mediator
-            .Setup(x => x.Send(It.Is<RemoveStudentCommand>(c => c.Id == 12), default))
+            .Setup(x => x.Send(It.Is<RemoveStudentCommand>(c => c.Id == 12), CancellationToken.None))
             .ReturnsAsync(result);
 
         // Act
@@ -279,7 +279,7 @@ public class StudentEndpointTests
 
         mediator.Verify(x => x.Send(
             It.Is<RemoveStudentCommand>(cmd => cmd.Id == 12),
-            default), Times.Once);
+            CancellationToken.None), Times.Once);
     }
 
     [Fact]
@@ -290,7 +290,7 @@ public class StudentEndpointTests
         Result<bool> result = Result<bool>.Failure(string.Empty);
 
         mediator
-            .Setup(x => x.Send(It.Is<RemoveStudentCommand>(c => c.Id == 12), default))
+            .Setup(x => x.Send(It.Is<RemoveStudentCommand>(c => c.Id == 12), CancellationToken.None))
             .ReturnsAsync(result);
 
         // Act
@@ -303,6 +303,6 @@ public class StudentEndpointTests
 
         mediator.Verify(x => x.Send(
             It.Is<RemoveStudentCommand>(cmd => cmd.Id == 12),
-            default), Times.Once);
+            CancellationToken.None), Times.Once);
     }
 }
