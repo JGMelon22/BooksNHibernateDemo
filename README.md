@@ -42,6 +42,14 @@ A side project made to study about NHibernate ORM with DDD and Simple SimpleMedi
 - [`Microsoft.Extensions.Logging.Abstractions`](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Abstractions) — Logging abstractions for dependency injection and flexibility.  
 - [`NHibernate`](https://www.nuget.org/packages/NHibernate) — ORM for interacting with relational databases.
 
+#### **Unit Tests** (`NHibernateDemo.Application.UnitTests` and `NHibernateDemo.API.UnitTests`)
+- `coverlet.collector`
+- `Microsoft.NET.Test.Sdk`
+- [`Moq`](https://www.nuget.org/packages/Moq) — The most popular and friendly mocking library for .NET.
+- [`Shouldly`](https://www.nuget.org/packages/shouldly/) — An assertion framework which focuses on giving great error messages when the assertion fails while being simple and terse.
+- `xunit`
+- `xunit.runner.visualstudio`
+
 ### 📚 References
 [NHibernate - The object-relational mapper for .NET](https://nhibernate.info/) \
 [NHibernate - Relational Persistence for Idiomatic .NET](https://nhibernate.info/doc/nhibernate-reference/index.html) \
