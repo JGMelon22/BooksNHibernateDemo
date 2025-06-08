@@ -1,4 +1,4 @@
-# NHibernate Students API   
+# NHibernate Students API
 A side project made to study about NHibernate ORM with DDD and Simple SimpleMediator.
 
 ### 🧰 Tech Stack
@@ -24,23 +24,25 @@ A side project made to study about NHibernate ORM with DDD and Simple SimpleMedi
 
 ### 🧩 Dependencies
 #### **API Layer** (`NHibernateDemo.API`)
-- [`Microsoft.AspNetCore.OpenApi`](https://www.nuget.org/packages/Microsoft.AspNetCore.OpenApi) — OpenAPI support for ASP.NET Core.  
-- [`MiniValidation`](https://www.nuget.org/packages/MiniValidation) — Minimal, fast validation library for .NET.  
-- [`NHibernate`](https://www.nuget.org/packages/NHibernate) — ORM for database access.  
-- [`Swashbuckle.AspNetCore`](https://www.nuget.org/packages/Swashbuckle.AspNetCore) — Swagger/OpenAPI generation for ASP.NET Core.  
+- [`Microsoft.AspNetCore.OpenApi`](https://www.nuget.org/packages/Microsoft.AspNetCore.OpenApi) — OpenAPI support for ASP.NET Core.
+- [`MiniValidation`](https://www.nuget.org/packages/MiniValidation) — Minimal, fast validation library for .NET.
+- [`NHibernate`](https://www.nuget.org/packages/NHibernate) — ORM for database access.
+- [`Swashbuckle.AspNetCore`](https://www.nuget.org/packages/Swashbuckle.AspNetCore) — Swagger/OpenAPI generation for ASP.NET Core.
 
 ---
 
 #### **Application Layer** (`NHibernateDemo.Application`)
-- [`NetDevPack.SimpleMediator`](https://www.nuget.org/packages/NetDevPack.SimpleMediator) — Simple implementation of the Mediator pattern for .NET.  
+- [`NetDevPack.SimpleMediator`](https://www.nuget.org/packages/NetDevPack.SimpleMediator) — Simple implementation of the Mediator pattern for .NET.
 
 ---
 
 #### **Infrastructure Layer** (`NHibernateDemo.Infrastructure`)
-- [`FluentNHibernate`](https://www.nuget.org/packages/FluentNHibernate) — Fluent API for NHibernate ORM mappings.  
-- [`Microsoft.Data.SqlClient`](https://www.nuget.org/packages/Microsoft.Data.SqlClient) — SQL Server data provider.  
-- [`Microsoft.Extensions.Logging.Abstractions`](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Abstractions) — Logging abstractions for dependency injection and flexibility.  
+- [`FluentNHibernate`](https://www.nuget.org/packages/FluentNHibernate) — Fluent API for NHibernate ORM mappings.
+- [`Microsoft.Data.SqlClient`](https://www.nuget.org/packages/Microsoft.Data.SqlClient) — SQL Server data provider.
+- [`Microsoft.Extensions.Logging.Abstractions`](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Abstractions) — Logging abstractions for dependency injection and flexibility.
 - [`NHibernate`](https://www.nuget.org/packages/NHibernate) — ORM for interacting with relational databases.
+
+---
 
 #### **Unit Tests** (`NHibernateDemo.Application.UnitTests` and `NHibernateDemo.API.UnitTests`)
 - `coverlet.collector`
