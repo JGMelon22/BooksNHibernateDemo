@@ -12,28 +12,30 @@ public static class StudentEndpoint
 {
     public static void MapStudentsRoute(this IEndpointRouteBuilder app)
     {
-        app.MapGet("/students", GetStudentsListAsync)
+        RouteGroupBuilder group = app.MapGroup("/students");
+
+        group.MapGet("/", GetStudentsListAsync)
             .WithName("GetStudentsList")
             .WithOpenApi();
 
-        app.MapGet("/student/{id}", GetStudentAsync)
+        group.MapGet("/{id}", GetStudentAsync)
             .WithName("GetStudent")
             .WithOpenApi();
 
-        app.MapPost("/student", AddStudentAsync)
+        group.MapPost("/", AddStudentAsync)
             .WithName("AddStudent")
             .WithOpenApi();
 
-        app.MapPatch("/student/{id}", UpdateStudentAsync)
+        group.MapPatch("/{id}", UpdateStudentAsync)
             .WithName("UpdateStudent")
             .WithOpenApi();
 
-        app.MapDelete("/student/{id}", RemoveStudentAsync)
+        group.MapDelete("/{id}", RemoveStudentAsync)
             .WithName("RemoveStudent")
             .WithOpenApi();
     }
 
-    private static async Task<IResult> GetStudentsListAsync(IMediator mediator)
+    internal static async Task<IResult> GetStudentsListAsync(IMediator mediator)
     {
         Result<IEnumerable<StudentResponse>> students = await mediator.Send(new GetStudentsQuery());
 
@@ -42,7 +44,7 @@ public static class StudentEndpoint
             : Results.NoContent();
     }
 
-    private static async Task<IResult> GetStudentAsync(IMediator mediator, int id)
+    internal static async Task<IResult> GetStudentAsync(IMediator mediator, int id)
     {
         Result<StudentResponse> student = await mediator.Send(new GetStudentByIdQuery(id));
 
@@ -51,7 +53,7 @@ public static class StudentEndpoint
             : Results.NotFound(student);
     }
 
-    private static async Task<IResult> AddStudentAsync(IMediator mediator, StudentRequest student)
+    internal static async Task<IResult> AddStudentAsync(IMediator mediator, StudentRequest student)
     {
         if (!MiniValidator.TryValidate(student, out IDictionary<string, string[]> errors))
             return Results.ValidationProblem(errors);
@@ -63,7 +65,7 @@ public static class StudentEndpoint
             : Results.BadRequest(success);
     }
 
-    private static async Task<IResult> UpdateStudentAsync(IMediator mediator, int id, StudentRequest student)
+    internal static async Task<IResult> UpdateStudentAsync(IMediator mediator, int id, StudentRequest student)
     {
         if (!MiniValidator.TryValidate(student, out IDictionary<string, string[]> errors))
             return Results.ValidationProblem(errors);
@@ -75,7 +77,7 @@ public static class StudentEndpoint
             : Results.BadRequest(success);
     }
 
-    private static async Task<IResult> RemoveStudentAsync(IMediator mediator, int id)
+    internal static async Task<IResult> RemoveStudentAsync(IMediator mediator, int id)
     {
         Result<bool> success = await mediator.Send(new RemoveStudentCommand(id));
 

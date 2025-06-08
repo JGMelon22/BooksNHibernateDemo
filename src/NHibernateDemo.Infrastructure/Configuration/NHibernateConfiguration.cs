@@ -1,9 +1,9 @@
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
-using NHibernateDemo.Infrastructure.Mapping;
 using NHibernate;
-using NHibernate.Tool.hbm2ddl;
 using NHibernate.Driver;
+using NHibernate.Tool.hbm2ddl;
+using NHibernateDemo.Infrastructure.Mapping;
 
 namespace NHibernateDemo.Infrastructure.Configuration;
 
@@ -19,7 +19,7 @@ public class NHibernateConfiguration
     public ISessionFactory BuildSessionFactory()
     {
         return Fluently.Configure()
-            .Database(MsSqlConfiguration.MsSql2012 
+            .Database(MsSqlConfiguration.MsSql2012
                 .ConnectionString(_connectionString)
                 .Driver<MicrosoftDataSqlClientDriver>() // You must inform a modern SQL Drive
                 .ShowSql())
