@@ -18,10 +18,8 @@ public class CreateStudentCommandHandlerTests
         // Arrange
         Mock<IStudentRepository> repository = new();
         StudentRequest studentRequest = new("Mike Schmidt", "mike.ms@mail.com", "Biology", "Male");
-        Student student = studentRequest.ToDomain();
-
+        
         CreateStudentCommand command = new(studentRequest);
-        Result<bool> result = Result<bool>.Success(true);
 
         repository
             .Setup(x => x.AddStudentAsync(It.IsAny<Student>()))

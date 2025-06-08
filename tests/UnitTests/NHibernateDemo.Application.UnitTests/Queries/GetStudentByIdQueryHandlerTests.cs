@@ -26,7 +26,7 @@ public class GetStudentByIdQueryHandlerTests
         };
 
         GetStudentByIdQuery query = new(1);
-        Result<Student> repositoryResult = Result<Student>.Success(student);
+        ;
 
         repository
             .Setup(x => x.GetStudentAsync(1))
@@ -57,14 +57,12 @@ public class GetStudentByIdQueryHandlerTests
     {
         // Arrange
         Mock<IStudentRepository> repository = new();
-        Student? student = null;
 
         GetStudentByIdQuery query = new(2);
-        Result<Student> repositoryResult = new(student, true, string.Empty);
 
         repository
             .Setup(x => x.GetStudentAsync(2))
-            .ReturnsAsync(student);
+            .ReturnsAsync((Student?)null);
 
         GetStudentByIdQueryHandler handler = new(repository.Object);
 

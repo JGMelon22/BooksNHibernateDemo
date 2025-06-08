@@ -21,7 +21,6 @@ public class UpdateStudentCommandHandlerTests
         Student student = studentRequest.ToDomain();
 
         UpdateStudentCommand command = new(1, studentRequest);
-        Result<bool> repositoryResult = Result<bool>.Success(true);
 
         repository
                 .Setup(x => x.GetStudentAsync(1))

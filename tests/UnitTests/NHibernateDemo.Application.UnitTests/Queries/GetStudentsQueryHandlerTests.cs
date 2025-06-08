@@ -26,7 +26,6 @@ public class GetStudentsQueryHandlerTests
         ];
 
         GetStudentsQuery query = new();
-        Result<IEnumerable<Student>> repositoryResult = Result<IEnumerable<Student>>.Success(students);
 
         repository
             .Setup(x => x.GetStudentsListAsync())

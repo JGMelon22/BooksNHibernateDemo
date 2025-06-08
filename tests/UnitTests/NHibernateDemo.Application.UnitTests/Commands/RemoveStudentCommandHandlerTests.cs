@@ -25,7 +25,6 @@ public class RemoveStudentCommandHandlerTests
         };
 
         RemoveStudentCommand command = new(2);
-        Result<bool> repositoryResult = Result<bool>.Success(true);
 
         repository
             .Setup(x => x.GetStudentAsync(2))
