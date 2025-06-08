@@ -1,3 +1,4 @@
+using System.Reflection;
 using Microsoft.OpenApi.Models;
 
 namespace NHibernateDemo.API.Extensions;
@@ -36,6 +37,10 @@ public static class SwaggerCollection
                     new string[] { }
                 }
             });
+
+            // using System.Reflection;
+            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
         });
 
         return services;
