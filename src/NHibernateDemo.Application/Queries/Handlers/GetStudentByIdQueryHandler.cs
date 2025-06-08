@@ -1,18 +1,22 @@
+using Microsoft.Extensions.Options;
 using NetDevPack.SimpleMediator;
 using NHibernateDemo.Core.Domains.DTOs.Responses;
 using NHibernateDemo.Core.Domains.Entities;
 using NHibernateDemo.Core.Domains.Mappings;
 using NHibernateDemo.Core.Shared;
 using NHibernateDemo.Infrastructure.Interfaces.Repositories;
+using ZiggyCreatures.Caching.Fusion;
 
 namespace NHibernateDemo.Application.Queries.Handlers;
 
 public class GetStudentByIdQueryHandler : IRequestHandler<GetStudentByIdQuery, Result<StudentResponse>>
 {
+    private IFusionCache _cache;
     private readonly IStudentRepository _repository;
 
-    public GetStudentByIdQueryHandler(IStudentRepository repository)
+    public GetStudentByIdQueryHandler(IFusionCache cache, IStudentRepository repository)
     {
+        _cache = cache;
         _repository = repository;
     }
 
@@ -20,7 +24,11 @@ public class GetStudentByIdQueryHandler : IRequestHandler<GetStudentByIdQuery, R
     {
         try
         {
-            Student? student = await _repository.GetStudentAsync(request.Id);
+            Student? student = await _cache.GetOrSetAsync(
+                $"student:{request.Id}",
+                _ => _repository.GetStudentAsync(request.Id),
+                options => options.SetDuration(TimeSpan.FromMinutes(1))
+                );
 
             if (student is null)
                 return Result<StudentResponse>.Failure($"Student with Id {request.Id} not found!");

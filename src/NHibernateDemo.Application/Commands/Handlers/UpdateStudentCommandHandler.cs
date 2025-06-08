@@ -3,15 +3,18 @@ using NHibernateDemo.Core.Domains.Entities;
 using NHibernateDemo.Core.Domains.Mappings;
 using NHibernateDemo.Core.Shared;
 using NHibernateDemo.Infrastructure.Interfaces.Repositories;
+using ZiggyCreatures.Caching.Fusion;
 
 namespace NHibernateDemo.Application.Commands.Handlers;
 
 public class UpdateStudentCommandHandler : IRequestHandler<UpdateStudentCommand, Result<bool>>
 {
+    private readonly IFusionCache _cache;
     private readonly IStudentRepository _repository;
 
-    public UpdateStudentCommandHandler(IStudentRepository repository)
+    public UpdateStudentCommandHandler(IFusionCache cache, IStudentRepository repository)
     {
+        _cache = cache;
         _repository = repository;
     }
 
@@ -26,6 +29,10 @@ public class UpdateStudentCommandHandler : IRequestHandler<UpdateStudentCommand,
             Student updatedStudent = request.Student.ToDomain();
 
             bool success = await _repository.UpdateStudentAsync(request.Id, updatedStudent);
+            await _cache.SetAsync(
+                $"student:{request.Id}",
+                updatedStudent, options => options.SetDuration(TimeSpan.FromMinutes(1))
+            );
 
             return Result<bool>.Success(success);
         }

@@ -4,15 +4,18 @@ using NHibernateDemo.Core.Domains.Entities;
 using NHibernateDemo.Core.Domains.Mappings;
 using NHibernateDemo.Core.Shared;
 using NHibernateDemo.Infrastructure.Interfaces.Repositories;
+using ZiggyCreatures.Caching.Fusion;
 
 namespace NHibernateDemo.Application.Queries.Handlers;
 
 public class GetStudentsQueryHandler : IRequestHandler<GetStudentsQuery, Result<IEnumerable<StudentResponse>>>
 {
+    private IFusionCache _cache;
     private readonly IStudentRepository _repository;
 
-    public GetStudentsQueryHandler(IStudentRepository repository)
+    public GetStudentsQueryHandler(IFusionCache cache, IStudentRepository repository)
     {
+        _cache = cache;
         _repository = repository;
     }
 
@@ -20,7 +23,12 @@ public class GetStudentsQueryHandler : IRequestHandler<GetStudentsQuery, Result<
     {
         try
         {
-            IEnumerable<Student> students = await _repository.GetStudentsListAsync();
+            IEnumerable<Student> students = await _cache.GetOrSetAsync(
+               $"students:{request}",
+               _ => _repository.GetStudentsListAsync(),
+               options => options.SetDuration(TimeSpan.FromMinutes(1))
+               );
+
             IEnumerable<StudentResponse> responses = students.ToResponse();
 
             return Result<IEnumerable<StudentResponse>>.Success(responses);
