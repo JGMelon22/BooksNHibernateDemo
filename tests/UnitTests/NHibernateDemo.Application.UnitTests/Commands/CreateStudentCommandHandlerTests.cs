@@ -21,12 +21,22 @@ public class CreateStudentCommandHandlerTests
         Mock<IFusionCache> cache = new();
 
         StudentRequest studentRequest = new("Mike Schmidt", "mike.ms@mail.com", "Biology", "Male");
-        
+
         CreateStudentCommand command = new(studentRequest);
 
         repository
             .Setup(x => x.AddStudentAsync(It.IsAny<Student>()))
             .ReturnsAsync(true);
+
+        cache
+            .Setup(x => x.SetAsync(
+                It.IsAny<string>(),
+                It.IsAny<Student>(),
+                null,
+                null,
+                CancellationToken.None
+            ))
+            .Returns(ValueTask.CompletedTask);
 
         CreateStudentCommandHandler handler = new(cache.Object, repository.Object);
 

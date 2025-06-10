@@ -37,6 +37,10 @@ public class RemoveStudentCommandHandlerTests
             .Setup(x => x.RemoveStudentAsync(student.Id))
             .ReturnsAsync(true);
 
+        cache
+            .Setup(x => x.RemoveAsync($"student:{command.Id}", null, CancellationToken.None))
+            .Returns(ValueTask.CompletedTask);
+
         RemoveStudentCommandHandler handler = new(cache.Object, repository.Object);
 
         // Act

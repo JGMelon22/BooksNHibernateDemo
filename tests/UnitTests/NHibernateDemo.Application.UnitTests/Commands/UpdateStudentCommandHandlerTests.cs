@@ -33,6 +33,16 @@ public class UpdateStudentCommandHandlerTests
             .Setup(x => x.UpdateStudentAsync(1, It.IsAny<Student>()))
             .ReturnsAsync(true);
 
+        cache
+           .Setup(x => x.SetAsync(
+               It.IsAny<string>(),
+               It.IsAny<Student>(),
+               null,
+               null,
+               CancellationToken.None
+           ))
+           .Returns(ValueTask.CompletedTask);
+
         UpdateStudentCommandHandler handler = new(cache.Object, repository.Object);
 
         // Act
