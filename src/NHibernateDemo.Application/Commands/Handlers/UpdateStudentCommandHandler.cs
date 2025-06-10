@@ -31,7 +31,7 @@ public class UpdateStudentCommandHandler : IRequestHandler<UpdateStudentCommand,
             bool success = await _repository.UpdateStudentAsync(request.Id, updatedStudent);
             await _cache.SetAsync(
                 $"student:{request.Id}",
-                updatedStudent, options => options.SetDuration(TimeSpan.FromMinutes(1))
+                updatedStudent
             );
 
             return Result<bool>.Success(success);

@@ -6,6 +6,7 @@ using NHibernateDemo.Core.Domains.Entities;
 using NHibernateDemo.Core.Shared;
 using NHibernateDemo.Infrastructure.Interfaces.Repositories;
 using Shouldly;
+using ZiggyCreatures.Caching.Fusion;
 
 namespace NHibernateDemo.Application.UnitTests.Queries;
 
@@ -16,6 +17,8 @@ public class GetStudentByIdQueryHandlerTests
     {
         // Arrange
         Mock<IStudentRepository> repository = new();
+        Mock<IFusionCache> cache = new();
+
         Student student = new()
         {
             Id = 1,
@@ -26,13 +29,12 @@ public class GetStudentByIdQueryHandlerTests
         };
 
         GetStudentByIdQuery query = new(1);
-        ;
 
         repository
             .Setup(x => x.GetStudentAsync(1))
             .ReturnsAsync(student);
 
-        GetStudentByIdQueryHandler handler = new(repository.Object);
+        GetStudentByIdQueryHandler handler = new(cache.Object, repository.Object);
 
         // Act
         Result<StudentResponse> handlerResult = await handler.Handle(query, CancellationToken.None);
@@ -57,6 +59,7 @@ public class GetStudentByIdQueryHandlerTests
     {
         // Arrange
         Mock<IStudentRepository> repository = new();
+        Mock<IFusionCache> cache = new();
 
         GetStudentByIdQuery query = new(2);
 
@@ -64,7 +67,7 @@ public class GetStudentByIdQueryHandlerTests
             .Setup(x => x.GetStudentAsync(2))
             .ReturnsAsync((Student?)null);
 
-        GetStudentByIdQueryHandler handler = new(repository.Object);
+        GetStudentByIdQueryHandler handler = new(cache.Object, repository.Object);
 
         // Act
         Result<StudentResponse> handlerResult = await handler.Handle(query, CancellationToken.None);

@@ -2,6 +2,7 @@ using NHibernateDemo.API.Endpoints;
 using NHibernateDemo.API.Extensions;
 using NHibernateDemo.API.Middleware;
 using NHibernateDemo.Infrastructure.Configuration;
+using ZiggyCreatures.Caching.Fusion;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,12 @@ builder.Services.AddHandlers();
 builder.Services.AddRepositories();
 builder.Services.AddSwagger();
 
-builder.Services.AddFusionCache();
+builder.Services.AddFusionCache()
+        .WithDefaultEntryOptions(new FusionCacheEntryOptions
+        {
+            // CACHE DURATION
+            Duration = TimeSpan.FromMinutes(1)
+        });
 
 builder.Services.Configure<BasicAuthOptions>(builder.Configuration.GetSection(BasicAuthOptions.BasicAuth));
 

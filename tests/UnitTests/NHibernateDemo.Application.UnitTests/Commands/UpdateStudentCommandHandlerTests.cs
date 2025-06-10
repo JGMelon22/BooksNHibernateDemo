@@ -7,6 +7,7 @@ using NHibernateDemo.Core.Domains.Mappings;
 using NHibernateDemo.Core.Shared;
 using NHibernateDemo.Infrastructure.Interfaces.Repositories;
 using Shouldly;
+using ZiggyCreatures.Caching.Fusion;
 
 namespace NHibernateDemo.Application.UnitTests.Commands;
 
@@ -17,6 +18,8 @@ public class UpdateStudentCommandHandlerTests
     {
         // Arrange
         Mock<IStudentRepository> repository = new();
+        Mock<IFusionCache> cache = new();
+
         StudentRequest studentRequest = new("Paul Madness", "paul.mdd@mail.com", "Geography", "Male");
         Student student = studentRequest.ToDomain();
 
@@ -30,7 +33,7 @@ public class UpdateStudentCommandHandlerTests
             .Setup(x => x.UpdateStudentAsync(1, It.IsAny<Student>()))
             .ReturnsAsync(true);
 
-        UpdateStudentCommandHandler handler = new(repository.Object);
+        UpdateStudentCommandHandler handler = new(cache.Object, repository.Object);
 
         // Act
         Result<bool> handlerResult = await handler.Handle(command, CancellationToken.None);

@@ -25,8 +25,7 @@ public class GetStudentsQueryHandler : IRequestHandler<GetStudentsQuery, Result<
         {
             IEnumerable<Student> students = await _cache.GetOrSetAsync(
                $"students:{request}",
-               _ => _repository.GetStudentsListAsync(),
-               options => options.SetDuration(TimeSpan.FromMinutes(1))
+               _ => _repository.GetStudentsListAsync()
                );
 
             IEnumerable<StudentResponse> responses = students.ToResponse();

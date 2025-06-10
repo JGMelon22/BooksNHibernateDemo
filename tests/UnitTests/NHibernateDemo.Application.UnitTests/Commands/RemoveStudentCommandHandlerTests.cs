@@ -5,6 +5,7 @@ using NHibernateDemo.Core.Domains.Entities;
 using NHibernateDemo.Core.Shared;
 using NHibernateDemo.Infrastructure.Interfaces.Repositories;
 using Shouldly;
+using ZiggyCreatures.Caching.Fusion;
 
 namespace NHibernateDemo.Application.UnitTests.Commands;
 
@@ -15,6 +16,8 @@ public class RemoveStudentCommandHandlerTests
     {
         // Arrange
         Mock<IStudentRepository> repository = new();
+        Mock<IFusionCache> cache = new();
+
         Student student = new()
         {
             Id = 2,
@@ -34,7 +37,7 @@ public class RemoveStudentCommandHandlerTests
             .Setup(x => x.RemoveStudentAsync(student.Id))
             .ReturnsAsync(true);
 
-        RemoveStudentCommandHandler handler = new(repository.Object);
+        RemoveStudentCommandHandler handler = new(cache.Object, repository.Object);
 
         // Act
         Result<bool> handlerResult = await handler.Handle(command, CancellationToken.None);

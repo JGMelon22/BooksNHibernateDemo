@@ -27,7 +27,7 @@ public class CreateStudentCommandHandler : IRequestHandler<CreateStudentCommand,
 
             await _cache.SetAsync(
                 $"student:{student.Id}",
-                student, options => options.SetDuration(TimeSpan.FromMinutes(1))
+                student
             );
 
             return Result<bool>.Success(success);

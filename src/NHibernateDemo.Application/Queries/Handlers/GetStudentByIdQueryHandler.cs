@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Options;
 using NetDevPack.SimpleMediator;
 using NHibernateDemo.Core.Domains.DTOs.Responses;
 using NHibernateDemo.Core.Domains.Entities;
@@ -26,8 +25,7 @@ public class GetStudentByIdQueryHandler : IRequestHandler<GetStudentByIdQuery, R
         {
             Student? student = await _cache.GetOrSetAsync(
                 $"student:{request.Id}",
-                _ => _repository.GetStudentAsync(request.Id),
-                options => options.SetDuration(TimeSpan.FromMinutes(1))
+                _ => _repository.GetStudentAsync(request.Id)
                 );
 
             if (student is null)

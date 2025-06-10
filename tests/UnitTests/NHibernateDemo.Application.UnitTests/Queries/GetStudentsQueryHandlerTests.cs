@@ -6,6 +6,7 @@ using NHibernateDemo.Core.Domains.Entities;
 using NHibernateDemo.Core.Shared;
 using NHibernateDemo.Infrastructure.Interfaces.Repositories;
 using Shouldly;
+using ZiggyCreatures.Caching.Fusion;
 
 namespace NHibernateDemo.Application.UnitTests.Queries;
 
@@ -16,6 +17,8 @@ public class GetStudentsQueryHandlerTests
     {
         // Arrange
         Mock<IStudentRepository> repository = new();
+        Mock<IFusionCache> cache = new();
+
         IEnumerable<Student> students =
         [
             new("Alice Johnson", "alice.johnson@example.com", "Computer Science", "Female"),
@@ -31,7 +34,7 @@ public class GetStudentsQueryHandlerTests
             .Setup(x => x.GetStudentsListAsync())
             .ReturnsAsync(students);
 
-        GetStudentsQueryHandler handler = new(repository.Object);
+        GetStudentsQueryHandler handler = new(cache.Object, repository.Object);
 
         // Act
         Result<IEnumerable<StudentResponse>> handlerResult = await handler.Handle(query, CancellationToken.None);
