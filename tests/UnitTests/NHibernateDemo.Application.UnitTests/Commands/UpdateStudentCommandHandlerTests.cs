@@ -26,8 +26,8 @@ public class UpdateStudentCommandHandlerTests
         UpdateStudentCommand command = new(1, studentRequest);
 
         repository
-                .Setup(x => x.GetStudentAsync(1))
-                .ReturnsAsync(student);
+            .Setup(x => x.GetStudentAsync(1))
+            .ReturnsAsync(student);
 
         repository
             .Setup(x => x.UpdateStudentAsync(1, It.IsAny<Student>()))
@@ -35,7 +35,7 @@ public class UpdateStudentCommandHandlerTests
 
         cache
            .Setup(x => x.SetAsync(
-               It.IsAny<string>(),
+               It.Is<string>(x => x.StartsWith("student:")),
                It.IsAny<Student>(),
                null,
                null,

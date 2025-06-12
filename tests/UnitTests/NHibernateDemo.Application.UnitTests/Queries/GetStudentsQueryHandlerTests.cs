@@ -29,10 +29,10 @@ public class GetStudentsQueryHandlerTests
         ];
 
         GetStudentsQuery query = new();
-        
+
         cache
             .Setup(x => x.GetOrSetAsync(
-                It.IsAny<string>(),
+                It.Is<string>(x => x.StartsWith("students:")),
                 It.IsAny<Func<FusionCacheFactoryExecutionContext<IEnumerable<Student>>,
                         CancellationToken, Task<IEnumerable<Student>>>>(),
                 default,
@@ -40,8 +40,8 @@ public class GetStudentsQueryHandlerTests
                 null,
                 CancellationToken.None
             ))
-            .Returns(ValueTask.FromResult(students));        
-        
+            .Returns(ValueTask.FromResult(students));
+
         repository
             .Setup(x => x.GetStudentsListAsync())
             .ReturnsAsync(students);

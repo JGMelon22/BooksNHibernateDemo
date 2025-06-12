@@ -32,7 +32,7 @@ public class GetStudentByIdQueryHandlerTests
 
         cache
             .Setup(x => x.GetOrSetAsync(
-                It.IsAny<string>(),
+                It.Is<string>(x => x.StartsWith("student:")),
                 It.IsAny<Func<FusionCacheFactoryExecutionContext<Student>, CancellationToken, Task<Student>>>(),
                 default,
                 null,
@@ -61,8 +61,6 @@ public class GetStudentByIdQueryHandlerTests
 
         handlerResult.IsSuccess.ShouldBeTrue();
         handlerResult.Message.ShouldBe(string.Empty);
-
-        // repository.Verify(x => x.GetStudentAsync(1), Times.Once);
     }
 
     [Fact]
@@ -76,7 +74,7 @@ public class GetStudentByIdQueryHandlerTests
 
         cache
             .Setup(x => x.GetOrSetAsync(
-                It.IsAny<string>(),
+                It.Is<string>(x => x.StartsWith("student:")),
                 It.IsAny<Func<FusionCacheFactoryExecutionContext<Student?>, CancellationToken, Task<Student?>>>(),
                 default,
                 null,

@@ -30,7 +30,7 @@ public class CreateStudentCommandHandlerTests
 
         cache
             .Setup(x => x.SetAsync(
-                It.IsAny<string>(),
+                It.Is<string>(x => x.StartsWith("student:")),
                 It.IsAny<Student>(),
                 null,
                 null,
