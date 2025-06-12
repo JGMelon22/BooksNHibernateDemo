@@ -3,7 +3,6 @@ using NHibernateDemo.Application.Commands;
 using NHibernateDemo.Application.Commands.Handlers;
 using NHibernateDemo.Core.Domains.DTOs.Requests;
 using NHibernateDemo.Core.Domains.Entities;
-using NHibernateDemo.Core.Domains.Mappings;
 using NHibernateDemo.Core.Shared;
 using NHibernateDemo.Infrastructure.Interfaces.Repositories;
 using Shouldly;
