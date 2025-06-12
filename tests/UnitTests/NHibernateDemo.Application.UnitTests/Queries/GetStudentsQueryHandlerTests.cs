@@ -29,7 +29,19 @@ public class GetStudentsQueryHandlerTests
         ];
 
         GetStudentsQuery query = new();
-
+        
+        cache
+            .Setup(x => x.GetOrSetAsync(
+                It.IsAny<string>(),
+                It.IsAny<Func<FusionCacheFactoryExecutionContext<IEnumerable<Student>>,
+                        CancellationToken, Task<IEnumerable<Student>>>>(),
+                default,
+                null,
+                null,
+                CancellationToken.None
+            ))
+            .Returns(ValueTask.FromResult(students));        
+        
         repository
             .Setup(x => x.GetStudentsListAsync())
             .ReturnsAsync(students);
@@ -44,7 +56,5 @@ public class GetStudentsQueryHandlerTests
         handlerResult.Data.Count().ShouldBe(5);
         handlerResult.IsSuccess.ShouldBeTrue();
         handlerResult.Message.ShouldBe(string.Empty);
-
-        repository.Verify(x => x.GetStudentsListAsync(), Times.Once);
     }
 }

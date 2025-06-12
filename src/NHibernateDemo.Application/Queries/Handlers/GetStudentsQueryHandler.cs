@@ -19,14 +19,15 @@ public class GetStudentsQueryHandler : IRequestHandler<GetStudentsQuery, Result<
         _repository = repository;
     }
 
-    public async Task<Result<IEnumerable<StudentResponse>>> Handle(GetStudentsQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<StudentResponse>>> Handle(GetStudentsQuery request,
+        CancellationToken cancellationToken)
     {
         try
         {
             IEnumerable<Student> students = await _cache.GetOrSetAsync(
-               $"students:{request}",
-               _ => _repository.GetStudentsListAsync()
-               );
+                $"students:{request}",
+                _ => _repository.GetStudentsListAsync()
+            );
 
             IEnumerable<StudentResponse> responses = students.ToResponse();
 
@@ -34,8 +35,8 @@ public class GetStudentsQueryHandler : IRequestHandler<GetStudentsQuery, Result<
         }
         catch (Exception ex)
         {
-            return Result<IEnumerable<StudentResponse>>.Failure("An error occurred while fetching students: " + ex.Message);
+            return Result<IEnumerable<StudentResponse>>.Failure("An error occurred while fetching students: " +
+                                                                ex.Message);
         }
     }
-
 }
