@@ -27,13 +27,14 @@ A side project made to study about NHibernate ORM with DDD and Simple SimpleMedi
 - [`Microsoft.AspNetCore.OpenApi`](https://www.nuget.org/packages/Microsoft.AspNetCore.OpenApi) — OpenAPI support for ASP.NET Core.
 - [`MiniValidation`](https://www.nuget.org/packages/MiniValidation) — Minimal, fast validation library for .NET.
 - [`NHibernate`](https://www.nuget.org/packages/NHibernate) — ORM for database access.
+- [`ZiggyCreatures.FusionCache`](https://www.nuget.org/packages/ZiggyCreatures.FusionCache/) — FusionCache is an easy to use, fast and robust hybrid cache with advanced resiliency features.
 - [`Swashbuckle.AspNetCore`](https://www.nuget.org/packages/Swashbuckle.AspNetCore) — Swagger/OpenAPI generation for ASP.NET Core.
 
 ---
 
 #### **Application Layer** (`NHibernateDemo.Application`)
 - [`NetDevPack.SimpleMediator`](https://www.nuget.org/packages/NetDevPack.SimpleMediator) — Simple implementation of the Mediator pattern for .NET.
-
+- [`ZiggyCreatures.FusionCache`](https://www.nuget.org/packages/ZiggyCreatures.FusionCache/) — FusionCache is an easy to use, fast and robust hybrid cache with advanced resiliency features.
 ---
 
 #### **Infrastructure Layer** (`NHibernateDemo.Infrastructure`)
